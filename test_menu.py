@@ -7,11 +7,16 @@ from pykeyboard import PyKeyboard
 from time import sleep
 import Xlib.display
 import os
+import sys
 import dbus
 import shutil
 import unittest
 from collections import namedtuple
 Desktop_obj = namedtuple('Desktop_obj','name')
+
+sys.path.append(".")
+# 加入自己的lib
+from deepinlib.parseddeConfig import ddeconfig
 
 k = PyKeyboard()
 m = PyMouse()
@@ -77,6 +82,7 @@ class testdesktopmenu(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cleardesktop()
+        cls.ddeconfig = ddeconfig()
 
     @classmethod
     def tearDownClass(cls):
@@ -191,11 +197,10 @@ class testdesktopmenu(unittest.TestCase):
 
     def testdesktopmenuSortname(self):
         shutil.copy('./data/small.txt', self.desktoppath)
-        sleep(3)
+        sleep(2)
         shutil.copy('./data/big.txt', self.desktoppath)
-        sleep(3)
-        filelist = desktoplist()
-        print(filelist)
+        sleep(2)
+        filelist = self.ddeconfig.getDesktopIconlist()
         self.assertListEqual(filelist, [u'small.txt', u'big.txt'])
 
         mouseClickRight()
@@ -204,18 +209,36 @@ class testdesktopmenu(unittest.TestCase):
         keySingle(k.left_key)
         keySingle(k.down_key)
         keySingle(k.enter_key)
-        filelist = desktoplist()
+        filelist = self.ddeconfig.getDesktopIconlist()
         self.assertListEqual(filelist, [u'big.txt', u'small.txt'])
 
+    def testdesktopmenuSortsize(self):
+        shutil.copy('./data/small.txt', self.desktoppath)
+        sleep(2)
+        shutil.copy('./data/big.txt', self.desktoppath)
+        sleep(2)
+        filelist= self.ddeconfig.getDesktopIconlist()
+        self.assertListEqual(filelist, [u'small.txt', u'big.txt'])
+
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        filelist = self.ddeconfig.getDesktopIconlist()
+        self.assertListEqual(filelist, [u'big.txt', u'small.txt'])
 
 def suite():
     suite = unittest.TestSuite()
-    #suite.addTest(testdesktopmenu('testdesktopmenufolder'))
-    #suite.addTest(testdesktopmenu('testdesktopmenuNewtxt'))
-    #suite.addTest(testdesktopmenu('testdesktopmenuNewdoc'))
-    #suite.addTest(testdesktopmenu('testdesktopmenuNewppt'))
-    #suite.addTest(testdesktopmenu('testdesktopmenuNewxls'))
+    suite.addTest(testdesktopmenu('testdesktopmenufolder'))
+    suite.addTest(testdesktopmenu('testdesktopmenuNewtxt'))
+    suite.addTest(testdesktopmenu('testdesktopmenuNewdoc'))
+    suite.addTest(testdesktopmenu('testdesktopmenuNewppt'))
+    suite.addTest(testdesktopmenu('testdesktopmenuNewxls'))
     suite.addTest(testdesktopmenu('testdesktopmenuSortname'))
+    suite.addTest(testdesktopmenu('testdesktopmenuSortsize'))
     return suite
 
 if __name__ == "__main__":
