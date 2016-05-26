@@ -57,7 +57,7 @@ def mouseClickRight():
 
 def mouseClickL(x, y):
     m.click(x, y)
-    sleep(1)
+    sleep(2)
 
 def keyTypeStr(str):
     k.type_string(str)
@@ -230,6 +230,61 @@ class testdesktopmenu(unittest.TestCase):
         filelist = self.ddeconfig.getDesktopIconlist()
         self.assertListEqual(filelist, [u'big.txt', u'small.txt'])
 
+    def testdesktopmenuSorttype(self):
+        shutil.copy('./data/test.xls', self.desktoppath)
+        sleep(2)
+        shutil.copy('./data/test.txt', self.desktoppath)
+        sleep(2)
+        shutil.copy('./data/test.ppt', self.desktoppath)
+        sleep(2)
+        filelist = self.ddeconfig.getDesktopIconlist()
+        self.assertListEqual(filelist, [u'test.xls', u'test.txt', u'test.ppt'])
+        
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        filelist = self.ddeconfig.getDesktopIconlist()
+        self.assertListEqual(filelist, [u'test.ppt', u'test.txt', u'test.xls'])
+
+    def testdesktopmenuSortmodifydate(self):
+        shutil.copy('./data/test.xls', self.desktoppath)
+        sleep(2)
+        shutil.copy('./data/test.txt', self.desktoppath)
+        sleep(2)
+        shutil.copy('./data/test.ppt', self.desktoppath)
+        sleep(2)
+        filelist = self.ddeconfig.getDesktopIconlist()
+
+    def testdesktopmenuPaste(self):
+        shutil.copy('./data/copy.txt', self.desktoppath)
+        sleep(2)
+        mouseClickR(20, 20)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        sleep(2)
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        sleep(2)
+        filelist = self.ddeconfig.getDesktopIconlist()
+        if True == chinese:
+            self.assertListEqual(filelist, [u'copy.txt', u'copy（复件）.txt'])
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(testdesktopmenu('testdesktopmenufolder'))
@@ -239,6 +294,9 @@ def suite():
     suite.addTest(testdesktopmenu('testdesktopmenuNewxls'))
     suite.addTest(testdesktopmenu('testdesktopmenuSortname'))
     suite.addTest(testdesktopmenu('testdesktopmenuSortsize'))
+    suite.addTest(testdesktopmenu('testdesktopmenuSorttype'))
+    suite.addTest(testdesktopmenu('testdesktopmenuSortmodifydate'))
+    suite.addTest(testdesktopmenu('testdesktopmenuPaste'))
     return suite
 
 if __name__ == "__main__":

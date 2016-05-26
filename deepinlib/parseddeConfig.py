@@ -3,6 +3,7 @@
 
 import os
 import sys
+import urllib
 
 if 2 == sys.version_info.major:
     import ConfigParser as configparser
@@ -30,6 +31,6 @@ class ddeconfig(object):
         dictsort = sorted(dict.iteritems(), key= lambda d:d[0])
         rl = []
         for (k, v) in dictsort:
-            rl.append(v)
+            rl.append(urllib.unquote(v).encode('gb2312'))
 
         return rl
