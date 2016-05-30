@@ -110,8 +110,7 @@ def isTaskExist(name):
     for pid in psutil.pids():
         p = psutil.Process(pid)
         if p.name() == name:
-            print(p.name())
-            #return True
+            return True
     return False
 
 class testdesktopmenu(unittest.TestCase):
