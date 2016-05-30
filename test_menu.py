@@ -237,7 +237,7 @@ class testdesktopmenu(unittest.TestCase):
         sleep(2)
         shutil.copy('./data/test.ppt', self.desktoppath)
         sleep(2)
-        filelist = self.ddeconfig.getDesktopIconlist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         self.assertListEqual(filelist, [u'test.xls', u'test.txt', u'test.ppt'])
         
         mouseClickRight()
@@ -248,7 +248,7 @@ class testdesktopmenu(unittest.TestCase):
         keySingle(k.down_key)
         keySingle(k.down_key)
         keySingle(k.enter_key)
-        filelist = self.ddeconfig.getDesktopIconlist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         self.assertListEqual(filelist, [u'test.ppt', u'test.txt', u'test.xls'])
 
     def testdesktopmenuSortmodifydate(self):
@@ -258,7 +258,21 @@ class testdesktopmenu(unittest.TestCase):
         sleep(2)
         shutil.copy('./data/test.ppt', self.desktoppath)
         sleep(2)
-        filelist = self.ddeconfig.getDesktopIconlist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
+        self.assertListEqual(filelist, [u'test.xls', u'test.txt', u'test.ppt'])
+
+        shutil.copy('./data/test.txt', self.desktoppath)
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        filelist = self.ddeconfig.getDesktopIconlist2()
+        self.assertListEqual(filelist, [u'test.xls', u'test.ppt', u'test.txt'])
 
     def testdesktopmenuPaste(self):
         shutil.copy('./data/copy.txt', self.desktoppath)
