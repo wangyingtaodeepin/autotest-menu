@@ -334,6 +334,23 @@ class testdesktopmenu(unittest.TestCase):
         if True == chinese:
             self.assertListEqual(filelist, [u'copy.txt', u'copy（复件）.txt'])
 
+    def testdesktopmenuDisplaysetting(self):
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        rt = Waitter(Display()).isTaskExist("dde-control-center")
+        self.assertTrue(rt)
+        mouseCLickLeft()
+        sleep(5)
+        rf = Waitter(Display()).isTaskExist("dde-control-center")
+        self.assertFalse(rf)
+
     def testdesktopmenuCornernavi(self):
         mouseClickRight()
         keySingle(k.down_key)
@@ -351,6 +368,24 @@ class testdesktopmenu(unittest.TestCase):
         rf = Waitter(Display()).isTaskExist("dde-zone")
         self.assertFalse(rf)
 
+    def testdesktopmenuPersonnality(self):
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        rt = Waitter(Display()).isTaskExist("dde-control-center")
+        self.assertTrue(rt)
+        mouseCLickLeft()
+        rf = Waitter(Display()).isTaskExist("dde-control-center")
+        self.assertFalse(rf)
+
 
 def suite():
     suite = unittest.TestSuite()
@@ -364,7 +399,9 @@ def suite():
     suite.addTest(testdesktopmenu('testdesktopmenuSorttype'))
     suite.addTest(testdesktopmenu('testdesktopmenuSortmodifydate'))
     suite.addTest(testdesktopmenu('testdesktopmenuPaste'))
+    suite.addTest(testdesktopmenu('testdesktopmenuDisplaysetting'))
     suite.addTest(testdesktopmenu('testdesktopmenuCornernavi'))
+    suite.addTest(testdesktopmenu('testdesktopmenuPersonnality'))
     return suite
 
 if __name__ == "__main__":
