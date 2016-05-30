@@ -200,7 +200,7 @@ class testdesktopmenu(unittest.TestCase):
         sleep(2)
         shutil.copy('./data/big.txt', self.desktoppath)
         sleep(2)
-        filelist = self.ddeconfig.getDesktopIconlist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         self.assertListEqual(filelist, [u'small.txt', u'big.txt'])
 
         mouseClickRight()
@@ -209,7 +209,7 @@ class testdesktopmenu(unittest.TestCase):
         keySingle(k.left_key)
         keySingle(k.down_key)
         keySingle(k.enter_key)
-        filelist = self.ddeconfig.getDesktopIconlist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         self.assertListEqual(filelist, [u'big.txt', u'small.txt'])
 
     def testdesktopmenuSortsize(self):
@@ -227,7 +227,7 @@ class testdesktopmenu(unittest.TestCase):
         keySingle(k.down_key)
         keySingle(k.down_key)
         keySingle(k.enter_key)
-        filelist = self.ddeconfig.getDesktopIconlist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         self.assertListEqual(filelist, [u'big.txt', u'small.txt'])
 
     def testdesktopmenuSorttype(self):
@@ -281,7 +281,7 @@ class testdesktopmenu(unittest.TestCase):
         keySingle(k.down_key)
         keySingle(k.enter_key)
         sleep(2)
-        filelist = self.ddeconfig.getDesktopIconlist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
             self.assertListEqual(filelist, [u'copy.txt', u'copy（复件）.txt'])
 
