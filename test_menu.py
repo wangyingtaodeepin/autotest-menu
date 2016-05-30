@@ -5,10 +5,14 @@
 from pymouse import PyMouse
 from pykeyboard import PyKeyboard
 from time import sleep
-import Xlib.display
+from Xlib.display import Display
+from Xlib import X
+import gtk
+import wnck
 import os
 import sys
 import dbus
+import psutil
 import shutil
 import unittest
 from collections import namedtuple
@@ -21,7 +25,7 @@ from deepinlib.parseddeConfig import ddeconfig
 k = PyKeyboard()
 m = PyMouse()
 
-resolution = Xlib.display.Display().screen().root.get_geometry()
+resolution = Display().screen().root.get_geometry()
 screen_width = resolution.width
 screen_height = resolution.height
 relative_rate = 0.5
@@ -59,9 +63,12 @@ def mouseClickL(x, y):
     m.click(x, y)
     sleep(2)
 
+def mouseCLickLeft():
+    mouseClickL(screen_width*relative_rate, screen_height*relative_rate)
+
 def keyTypeStr(str):
     k.type_string(str)
-    sleep(1)
+    sleep(2)
 
 def keySingle(key):
     k.press_key(key)
@@ -77,6 +84,35 @@ def desktoplist():
 
 def cleardesktop():
     os.system("rm -rf %s" % desktoppath.encode('utf-8'))
+
+class Waitter(object):
+    def __init__(self, display):
+        self.display = display
+        self.root = self.display.screen().root
+        self.root.change_attributes(event_mask = X.SubstructureNotifyMask)
+
+    def loop(self, w_name):
+        while True:
+            sleep(5)
+            screen = wnck.screen_get_default()
+            while gtk.events_pending():
+                gtk.main_iteration()
+
+            for window in screen.get_windows():
+                print(window.get_name())
+                if w_name == window.get_name():
+                    return True
+
+    def isTaskExist(self, name):
+        return isTaskExist(name)
+
+def isTaskExist(name):
+    for pid in psutil.pids():
+        p = psutil.Process(pid)
+        if p.name() == name:
+            print(p.name())
+            #return True
+    return False
 
 class testdesktopmenu(unittest.TestCase):
     @classmethod
@@ -299,6 +335,24 @@ class testdesktopmenu(unittest.TestCase):
         if True == chinese:
             self.assertListEqual(filelist, [u'copy.txt', u'copy（复件）.txt'])
 
+    def testdesktopmenuCornernavi(self):
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.left_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+        rt = Waitter(Display()).isTaskExist("dde-zone")
+        self.assertTrue(rt)
+        mouseCLickLeft()
+        rf = Waitter(Display()).isTaskExist("dde-zone")
+        self.assertFalse(rf)
+
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(testdesktopmenu('testdesktopmenufolder'))
@@ -311,6 +365,7 @@ def suite():
     suite.addTest(testdesktopmenu('testdesktopmenuSorttype'))
     suite.addTest(testdesktopmenu('testdesktopmenuSortmodifydate'))
     suite.addTest(testdesktopmenu('testdesktopmenuPaste'))
+    suite.addTest(testdesktopmenu('testdesktopmenuCornernavi'))
     return suite
 
 if __name__ == "__main__":
