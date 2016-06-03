@@ -45,6 +45,7 @@ elif 'en_US.UTF-8' == lang:
     english = True
     desktoppath = os.path.expanduser('~') + '/' + 'Desktop/*'
 else:
+    english = True
     desktoppath = os.path.expanduser('~') + '/' + 'Desktop/*'
 
 print("Language type is %s" % os.getenv("LANG"))
