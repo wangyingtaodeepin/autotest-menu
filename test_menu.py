@@ -127,6 +127,7 @@ class testdesktopmenu(unittest.TestCase):
         cleardesktop()
         self.desktoppath = desktoppath[:-1]
         print(self.desktoppath)
+        print(os.getcwd())
 
     def tearDown(self):
         cleardesktop()
