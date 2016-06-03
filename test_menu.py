@@ -44,6 +44,11 @@ if 'zh_CN.UTF-8' == lang:
 elif 'en_US.UTF-8' == lang:
     english = True
     desktoppath = os.path.expanduser('~') + '/' + 'Desktop/*'
+else:
+    desktoppath = os.path.expanduser('~') + '/' + 'Desktop/*'
+
+print("Language type is %s" % os.getenv("LANG"))
+print("desktoppath is %s" % desktoppath)
 
 def keyComWin(key):
     k.press_key(k.windows_l_key)
@@ -126,8 +131,6 @@ class testdesktopmenu(unittest.TestCase):
     def setUp(self):
         cleardesktop()
         self.desktoppath = desktoppath[:-1]
-        print(self.desktoppath)
-        print(os.getcwd())
 
     def tearDown(self):
         cleardesktop()
