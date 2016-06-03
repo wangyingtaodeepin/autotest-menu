@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# PyUserInput
+#  PyUserInput
 from pymouse import PyMouse
 from pykeyboard import PyKeyboard
 from time import sleep
