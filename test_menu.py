@@ -134,17 +134,23 @@ class testdesktopmenu(unittest.TestCase):
         mouseClickRight()
         keySingle(k.down_key)
         keySingle(k.enter_key)
-        filelist = desktoplist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u"新建文件夹"])
+            self.assertListEqual(filelist, [u"新建文件夹"])
+
+        if True == english:
+            self.assertListEqual(filelist, ["New folder"])
 
         sleep(1)
         mouseClickRight()
         keySingle(k.down_key)
         keySingle(k.enter_key)
-        filelist = desktoplist()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
             self.assertListEqual(sorted(filelist), sorted([u"新建文件夹", u"新建文件夹 2"]))
+
+        if True == english:
+            self.assertListEqual(filelist, ["New folder", "New folder 2"])
 
     def testdesktopmenuNewtxt(self):
         mouseClickRight()
