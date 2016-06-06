@@ -60,7 +60,7 @@ def keyComWin(key):
 
 def mouseClickR(x, y):
     m.click(x, y, 2)
-    sleep(1)
+    sleep(2)
 
 def mouseClickRight():
     mouseClickR(screen_width*relative_rate, screen_height*relative_rate)
@@ -79,7 +79,7 @@ def keyTypeStr(str):
 def keySingle(key):
     k.press_key(key)
     k.release_key(key)
-    sleep(1)
+    sleep(2)
 
 def desktoplist():
     desktopdict = session_iface.GetDesktopItems()
