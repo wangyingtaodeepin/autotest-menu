@@ -119,6 +119,75 @@ def isTaskExist(name):
             return True
     return False
 
+def clickNewfolder():
+    mouseClickRight()
+    keySingle(k.down_key)
+    keySingle(k.enter_key)
+
+def clickNewExcel():
+    if True == english:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
+    if True == chinese:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
+def clickNewPowerPoint():
+    if True == english:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
+    if True == chinese:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
+def clickNewText():
+    if True == english:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
+    if True == chinese:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
+def clickNewWord():
+    if True == english:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
+    if True == chinese:
+        mouseClickRight()
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.down_key)
+        keySingle(k.enter_key)
+
 class testdesktopmenu(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -137,9 +206,7 @@ class testdesktopmenu(unittest.TestCase):
         cleardesktop()
 
     def testdesktopmenufolder(self):
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
+        clickNewfolder()
         filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
             self.assertListEqual(filelist, [u"新建文件夹"])
@@ -148,99 +215,85 @@ class testdesktopmenu(unittest.TestCase):
             self.assertListEqual(filelist, ["New folder"])
 
         sleep(1)
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
+        clickNewfolder()
         filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), sorted([u"新建文件夹", u"新建文件夹 2"]))
+            self.assertListEqual(filelist, [u"新建文件夹", u"新建文件夹 2"])
 
         if True == english:
             self.assertListEqual(filelist, ["New folder", "New folder 2"])
 
     def testdesktopmenuNewtxt(self):
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewText()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'文本.txt'])
+            self.assertListEqual(filelist, [u'文本.txt'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['Text.txt'])
 
         sleep(1)
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewText()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'文本 2.txt', u'文本.txt'])
+            self.assertListEqual(filelist, [u'文本.txt', u'文本 2.txt'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['Text.txt', 'Text 2.txt'])
 
     def testdesktopmenuNewdoc(self):
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewWord()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'文档.doc'])
+            self.assertListEqual(filelist, [u'文档.doc'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['Word.doc'])
 
         sleep(1)
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewWord()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'文档 2.doc', u'文档.doc'])
+            self.assertListEqual(filelist, [u'文档.doc', u'文档 2.doc'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['Word.doc', 'Word 2.doc'])
 
     def testdesktopmenuNewppt(self):
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewPowerPoint()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'演示.ppt'])
+            self.assertListEqual(filelist, [u'演示.ppt'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['PowerPoint.ppt'])
 
         sleep(1)
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewPowerPoint()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'演示 2.ppt', u'演示.ppt'])
+            self.assertListEqual(filelist, [u'演示.ppt', u'演示 2.ppt'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['PowerPoint.ppt', 'PowerPoint 2.ppt'])
 
     def testdesktopmenuNewxls(self):
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewExcel()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'表格.xls'])
+            self.assertListEqual(filelist, [u'表格.xls'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['Excel.xls'])
 
         sleep(1)
-        mouseClickRight()
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.down_key)
-        keySingle(k.enter_key)
-        filelist = desktoplist()
+        clickNewExcel()
+        filelist = self.ddeconfig.getDesktopIconlist2()
         if True == chinese:
-            self.assertListEqual(sorted(filelist), [u'表格 2.xls', u'表格.xls'])
+            self.assertListEqual(filelist, [u'表格.xls', u'表格 2.xls'])
+
+        if True == english:
+            self.assertListEqual(filelist, ['Excel.xls', 'Excel 2.xls'])
 
     def testdesktopmenuSortname(self):
         shutil.copy('./data/small.txt', self.desktoppath)
@@ -359,9 +412,6 @@ class testdesktopmenu(unittest.TestCase):
         rt = Waitter(Display()).isTaskExist("dde-control-center")
         self.assertTrue(rt)
         mouseCLickLeft()
-        sleep(5)
-        rf = Waitter(Display()).isTaskExist("dde-control-center")
-        self.assertFalse(rf)
 
     def testdesktopmenuCornernavi(self):
         mouseClickRight()
@@ -377,8 +427,6 @@ class testdesktopmenu(unittest.TestCase):
         rt = Waitter(Display()).isTaskExist("dde-zone")
         self.assertTrue(rt)
         mouseCLickLeft()
-        rf = Waitter(Display()).isTaskExist("dde-zone")
-        self.assertFalse(rf)
 
     def testdesktopmenuPersonnality(self):
         mouseClickRight()
@@ -395,8 +443,6 @@ class testdesktopmenu(unittest.TestCase):
         rt = Waitter(Display()).isTaskExist("dde-control-center")
         self.assertTrue(rt)
         mouseCLickLeft()
-        rf = Waitter(Display()).isTaskExist("dde-control-center")
-        self.assertFalse(rf)
 
 
 def suite():
